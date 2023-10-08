@@ -1,10 +1,14 @@
 #ifndef KEEPER_H
 #define KEEPER_H
 
+#include "Base.h"
+
 class Keeper
 {
 private:
-    Keeper *array;
+    Base **array;
+    int size;
+    int countElement;
 
 public:
 // создание конструкторов и деструктора
@@ -17,6 +21,7 @@ public:
     void Set(); // добавить элемент
     void Get(); // получить элемент
     void Delete(); // удалить элемент
+    void Change(); // изменить значения
     void Save(); // сохранить данные в файл
     void Load(); // загрузить данные из файла
 };
