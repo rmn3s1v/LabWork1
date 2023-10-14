@@ -20,7 +20,9 @@ public:
 // основные методы
     void Set(); // добавить элемент
     void Get(); // получить элемент
+    void GetChoice(); // получить выбранный
     void Delete(); // удалить элемент
+    Keeper & operator-=(int element); // перегузка -=
     void Change(); // изменить значения
     void Save(); // сохранить данные в файл
     void Load(); // загрузить данные из файла

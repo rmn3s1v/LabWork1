@@ -12,14 +12,14 @@ Book::Book()
     this->year = "NONE"; // год выпуска
     this->annotation = "NONE"; // аннотация
     this->genre = "NONE"; // жанр
-    this->volume_of_page = 0; // объем страниц
-    this->cost = 0; // цена
+    this->volume_of_page = "NONE"; // объем страниц
+    this->cost = "NONE"; // цена
 
     cout << "Вызван конструктор по умолчанию класса - Book" << endl;
 }
 
 // конструктор с параметром
-Book::Book(string name, string author, string year, string annotation, string genre, int volume_of_page, float cost)
+Book::Book(string name, string author, string year, string annotation, string genre, string volume_of_page, string cost)
 {
     this->name = name; // название
     this->author = author; // автор
@@ -65,27 +65,7 @@ void Book::Set()
     cin >> this->author;
 
     cout << "Год выпуска: ";
-    try
-    {
-        cin >> year;
-        for (int i = 0; i < year.size(); i++)
-        {
-            if ((year[i] >= 'A' and year[i] <= 'Z') or year[i] == '.' or
-            year[i] == ',' or year[i] == '`' or year[i] == '~' or year[i] == '+' or
-            year[i] == '=' or year[i] == '_' or year[i] == '&' or year[i] == '$' or
-            year[i] == '#' or year[i] == '@' or year[i] == '!' or year[i] == '^' or
-            year[i] == '<' or year[i] == '>' or year[i] == '№' or
-            (year[i] >= 'А' and year[i] <= 'Я')) throw "Error";
-        }
-    }
-    catch(const std::exception& e)
-    {
-        cout << "Неверный ввод" << endl;
-    }
-    catch(const char*mssg)
-    {
-        cout << "Неверно введен год" << endl;
-    }
+    cin >> year;
 
     cout << "Аннотация: ";
     cin >> this->annotation;
@@ -94,34 +74,10 @@ void Book::Set()
     cin >> this->genre;
 
     cout << "Объем страниц: ";
-    try
-    {
-        cin >> this->volume_of_page;
-        if (this->volume_of_page < 1) throw "Error";
-    }
-    catch(const std::exception& e)
-    {
-        cout << "Некорректный ввод" << endl;
-    }
-    catch(const char*mssg)
-    {
-        cout << "Неверно введен объем" << endl;
-    }
+    cin >> this->volume_of_page;
 
     cout << "Цена: ";
-    try
-    {
-        cin >> this->cost;
-        if (this->cost < 0) throw "Error";
-    }
-    catch(const std::exception& e)
-    {
-        cout << "Некорректный ввод" << endl;
-    }
-    catch(const char*mssg)
-    {
-        cout << "Неверно введена цена" << endl;
-    }
+    cin >> this->cost;
 }
 
 // метод получения значений
@@ -146,8 +102,8 @@ void Book::Delete()
     this->year = "NONE"; // год выпуска
     this->annotation = "NONE"; // аннотация
     this->genre = "NONE"; // жанр
-    this->volume_of_page = 0; // объем страниц
-    this->cost = 0; // цена
+    this->volume_of_page = "NONE"; // объем страниц
+    this->cost = "NONE"; // цена
 }
 
 // метод изменения данных
@@ -163,12 +119,16 @@ void Book::Change()
          << "7 - Цена \n"
          << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 
-    int choice;
+    string choice;
 
     try
     {
         cin >> choice;
-        if (choice < 1 or choice > 7) throw "Error";
+        for (int i = 0; i < choice.length(); i++)
+        {
+            if (choice[i] >= 'A' and choice[i] <= 'Z' or choice[i] >= 'a' and choice[i] <= 'z') throw "Error";
+        }
+        if (stoi(choice) < 1 or stoi(choice) > 7) throw "Error";
     }
     catch(const std::exception& e)
     {
@@ -179,90 +139,46 @@ void Book::Change()
         cout << "Неверный ввод" << endl;
     }
 
-    if (choice == 1)
+    if (stoi(choice) == 1)
     {
         cout << "Название: ";
         cin >> this->name;
     }
 
-    else if (choice == 2)
+    else if (stoi(choice) == 2)
     {
         cout << "Автор: ";
         cin >> this->author;
     }
 
-    else if (choice == 3)
+    else if (stoi(choice) == 3)
     {
         cout << "Год выпуска: ";
-        try
-        {
-            cin >> year;
-            for (int i = 0; i < year.size(); i++)
-            {
-                if ((year[i] >= 'A' and year[i] <= 'Z') or year[i] == '.' or
-                year[i] == ',' or year[i] == '`' or year[i] == '~' or year[i] == '+' or
-                year[i] == '=' or year[i] == '_' or year[i] == '&' or year[i] == '$' or
-                year[i] == '#' or year[i] == '@' or year[i] == '!' or year[i] == '^' or
-                year[i] == '<' or year[i] == '>' or year[i] == '№' or
-                (year[i] >= 'А' and year[i] <= 'Я')) throw "Error";
-            }
-        }
-        catch(const std::exception& e)
-        {
-            cout << "Неверный ввод" << endl;
-        }
-        catch(const char*mssg)
-        {
-            cout << "Неверно введен год" << endl;
-        }
+        cin >> year;
     }
 
-    else if (choice == 4)
+    else if (stoi(choice) == 4)
     {
         cout << "Аннотация: ";
         cin >> this->annotation;
     }
 
-    else if (choice == 5)
+    else if (stoi(choice) == 5)
     {
         cout << "Жанр: ";
         cin >> this->genre;
     }
 
-    else if (choice == 6)
+    else if (stoi(choice) == 6)
     {
         cout << "Объем страниц: ";
-        try
-        {
-            cin >> this->volume_of_page;
-            if (this->volume_of_page < 1) throw "Error";
-        }
-        catch(const std::exception& e)
-        {
-            cout << "Некорректный ввод" << endl;
-        }
-        catch(const char*mssg)
-        {
-            cout << "Неверно введен объем" << endl;
-        }
+        cin >> this->volume_of_page;
     }
 
     else
     {
         cout << "Цена: ";
-        try
-        {
-            cin >> this->cost;
-            if (this->cost < 0) throw "Error";
-        }
-        catch(const std::exception& e)
-        {
-            cout << "Некорректный ввод" << endl;
-        }
-        catch(const char*mssg)
-        {
-            cout << "Неверно введена цена" << endl;
-        }
+        cin >> this->cost;
     }
 }
 
@@ -275,14 +191,14 @@ StudyBook::StudyBook()
     this->year = "NONE"; // год выпуска
     this->educational_institution = "NONE"; // учебное заведение
     this->year_of_study = "NONE"; // год обучения
-    this->volume_of_page = 0; // объем страниц
-    this->cost = 0; // цена
+    this->volume_of_page = "NONE"; // объем страниц
+    this->cost = "NONE"; // цена
 
     cout << "Вызван конструктор по умолчанию класса - StudyBook" << endl;
 }
 
 // конструктор с параметром
-StudyBook::StudyBook(string name, string author, string year, string educational_institution, string year_of_study, int volume_of_page, float cost)
+StudyBook::StudyBook(string name, string author, string year, string educational_institution, string year_of_study, string volume_of_page, string cost)
 {
     this->name = name; // название
     this->author = author; // автор
@@ -328,83 +244,19 @@ void StudyBook::Set()
     cin >> this->author;
 
     cout << "Год выпуска: ";
-    try
-    {
-        cin >> year;
-        for (int i = 0; i < year.size(); i++)
-        {
-            if ((year[i] >= 'A' and year[i] <= 'Z') or year[i] == '.' or
-            year[i] == ',' or year[i] == '`' or year[i] == '~' or year[i] == '+' or
-            year[i] == '=' or year[i] == '_' or year[i] == '&' or year[i] == '$' or
-            year[i] == '#' or year[i] == '@' or year[i] == '!' or year[i] == '^' or
-            year[i] == '<' or year[i] == '>' or year[i] == '№' or
-            (year[i] >= 'А' and year[i] <= 'Я')) throw "Error";
-        }
-    }
-    catch(const std::exception& e)
-    {
-        cout << "Неверный ввод" << endl;
-    }
-    catch(const char*mssg)
-    {
-        cout << "Неверно введен год" << endl;
-    }
+    cin >> year;
 
     cout << "Учебное заведение: ";
     cin >> educational_institution;
 
     cout << "Год обучения: ";
-    try
-    {
-        cin >> year_of_study;
-        for (int i = 0; i < year.size(); i++)
-        {
-            if ((year[i] >= 'A' and year[i] <= 'Z') or year[i] == '.' or
-            year[i] == ',' or year[i] == '`' or year[i] == '~' or year[i] == '+' or
-            year[i] == '=' or year[i] == '_' or year[i] == '&' or year[i] == '$' or
-            year[i] == '#' or year[i] == '@' or year[i] == '!' or year[i] == '^' or
-            year[i] == '<' or year[i] == '>' or year[i] == '№' or
-            (year[i] >= 'А' and year[i] <= 'Я')) throw "Error";
-        }
-    }
-    catch(const std::exception& e)
-    {
-        cout << "Неверный ввод" << endl;
-    }
-    catch(const char*mssg)
-    {
-        cout << "Неверно введен год" << endl;
-    }
+    cin >> year_of_study;
 
     cout << "Объем страниц: ";
-    try
-    {
-        cin >> this->volume_of_page;
-        if (this->volume_of_page < 1) throw "Error";
-    }
-    catch(const std::exception& e)
-    {
-        cout << "Некорректный ввод" << endl;
-    }
-    catch(const char*mssg)
-    {
-        cout << "Неверно введен объем" << endl;
-    }
+    cin >> this->volume_of_page;
 
     cout << "Цена: ";
-    try
-    {
-        cin >> this->cost;
-        if (this->cost < 0) throw "Error";
-    }
-    catch(const std::exception& e)
-    {
-        cout << "Некорректный ввод" << endl;
-    }
-    catch(const char*mssg)
-    {
-        cout << "Неверно введена цена" << endl;
-    }
+    cin >> this->cost;
 }
 
 // метод получения значений
@@ -429,8 +281,8 @@ void StudyBook::Delete()
     this->year = "NONE"; // год выпуска
     this->educational_institution = "NONE"; // аннотация
     this->year_of_study = "NONE"; // жанр
-    this->volume_of_page = 0; // объем страниц
-    this->cost = 0; // цена
+    this->volume_of_page = "NONE"; // объем страниц
+    this->cost = "NONE"; // цена
 }
 
 // метод изменения данных
@@ -446,12 +298,16 @@ void StudyBook::Change()
          << "7 - Цена \n"
          << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 
-    int choice;
+    string choice;
 
     try
     {
         cin >> choice;
-        if (choice < 1 or choice > 7) throw "Error";
+        for (int i = 0; i < choice.length(); i++)
+        {
+            if (choice[i] >= 'A' and choice[i] <= 'Z' or choice[i] >= 'a' and choice[i] <= 'z') throw "Error";
+        }
+        if (stoi(choice) < 1 or stoi(choice) > 7) throw "Error";
     }
     catch(const std::exception& e)
     {
@@ -462,110 +318,46 @@ void StudyBook::Change()
         cout << "Неверный ввод" << endl;
     }
 
-    if (choice == 1)
+    if (stoi(choice) == 1)
     {
         cout << "Название: ";
         cin >> this->name;
     }
 
-    else if (choice == 2)
+    else if (stoi(choice) == 2)
     {
         cout << "Автор: ";
         cin >> this->author;
     }
 
-    else if (choice == 3)
+    else if (stoi(choice) == 3)
     {
         cout << "Год выпуска: ";
-        try
-        {
-            cin >> year;
-            for (int i = 0; i < year.size(); i++)
-            {
-                if ((year[i] >= 'A' and year[i] <= 'Z') or year[i] == '.' or
-                year[i] == ',' or year[i] == '`' or year[i] == '~' or year[i] == '+' or
-                year[i] == '=' or year[i] == '_' or year[i] == '&' or year[i] == '$' or
-                year[i] == '#' or year[i] == '@' or year[i] == '!' or year[i] == '^' or
-                year[i] == '<' or year[i] == '>' or year[i] == '№' or
-                (year[i] >= 'А' and year[i] <= 'Я')) throw "Error";
-            }
-        }
-        catch(const std::exception& e)
-        {
-            cout << "Некорректный ввод" << endl;
-        }
-        catch(const char*mssg)
-        {
-            cout << "Неверно введен год" << endl;
-        }
+        cin >> year;
     }
 
-    else if (choice == 4)
+    else if (stoi(choice) == 4)
     {
         cout << "Учебное заведение: ";
         cin >> educational_institution;
     }
 
-    else if (choice == 5)
+    else if (stoi(choice) == 5)
     {
         cout << "Год обучения: ";
-        try
-        {
-            cin >> year_of_study;
-            for (int i = 0; i < year_of_study.size(); i++)
-            {
-                if ((year_of_study[i] >= 'A' and year_of_study[i] <= 'Z') or year_of_study[i] == '.' or
-                year_of_study[i] == ',' or year_of_study[i] == '`' or year_of_study[i] == '~' or year_of_study[i] == '+' or
-                year_of_study[i] == '=' or year_of_study[i] == '_' or year_of_study[i] == '&' or year_of_study[i] == '$' or
-                year_of_study[i] == '#' or year_of_study[i] == '@' or year_of_study[i] == '!' or year_of_study[i] == '^' or
-                year_of_study[i] == '<' or year_of_study[i] == '>' or year_of_study[i] == '№' or
-                (year_of_study[i] >= 'А' and year_of_study[i] <= 'Я')) throw "Error";
-            }
-        }
-        catch(const std::exception& e)
-        {
-            cout << "Некорректный ввод" << endl;
-        }
-        catch(const char*mssg)
-        {
-            cout << "Неверно введен год" << endl;
-        }
+        cin >> year_of_study;
     }
 
-    else if (choice == 6)
+    else if (stoi(choice) == 6)
     {
         cout << "Объем страниц: ";
-        try
-        {
-            cin >> this->volume_of_page;
-            if (this->volume_of_page < 1) throw "Error";
-        }
-        catch(const std::exception& e)
-        {
-            cout << "Некорректный ввод" << endl;
-        }
-        catch(const char*mssg)
-        {
-            cout << "Неверно введен объем" << endl;
-        }
+        cin >> this->volume_of_page;
     }
 
     else
     {
         cout << "Цена: ";
-        try
-        {
-            cin >> this->cost;
-            if (this->cost < 0) throw "Error";
-        }
-        catch(const std::exception& e)
-        {
-            cout << "Некорректный ввод" << endl;
-        }
-        catch(const char*mssg)
-        {
-            cout << "Неверно введена цена" << endl;
-        }
+        cin >> this->cost;
     }
 }
 
@@ -576,13 +368,13 @@ Chancellery::Chancellery()
     this->type = "NONE"; // название
     this->color = "NONE"; // автор
     this->appointment = "NONE"; // год выпуска
-    this->cost = 0; // аннотация
+    this->cost = "NONE"; // аннотация
 
     cout << "Вызван конструктор по умолчанию класса - Chancellery" << endl;
 }
 
 // конструктор с параметром
-Chancellery::Chancellery(string type, string color, string appointment, float cost)
+Chancellery::Chancellery(string type, string color, string appointment, string cost)
 {
     this->type = type; // название
     this->color = color; // автор
@@ -625,19 +417,7 @@ void Chancellery::Set()
     cin >> appointment;
 
     cout << "Цена: ";
-    try
-    {
-        cin >> this->cost;
-        if (this->cost < 0) throw "Error";
-    }
-    catch(const std::exception& e)
-    {
-        cout << "Некорректный ввод" << endl;
-    }
-    catch(const char*mssg)
-    {
-        cout << "Неверно введена цена" << endl;
-    }
+    cin >> this->cost;
 }
 
 // метод получения значений
@@ -657,7 +437,7 @@ void Chancellery::Delete()
     this->type = "NONE"; // название
     this->color = "NONE"; // автор
     this->appointment = "NONE"; // год выпуска
-    this->cost = 0; // аннотация
+    this->cost = "NONE"; // аннотация
 }
 
 // метод изменения данных
@@ -670,12 +450,16 @@ void Chancellery::Change()
          << "4 - Цена \n"
          << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 
-    int choice;
+    string choice;
 
     try
     {
         cin >> choice;
-        if (choice < 1 or choice > 7) throw "Error";
+        for (int i = 0; i < choice.length(); i++)
+        {
+            if (choice[i] >= 'A' and choice[i] <= 'Z' or choice[i] >= 'a' and choice[i] <= 'z') throw "Error";
+        }
+        if (stoi(choice) < 1 or stoi(choice) > 4) throw "Error";
     }
     catch(const std::exception& e)
     {
@@ -686,19 +470,19 @@ void Chancellery::Change()
         cout << "Неверный ввод" << endl;
     }
 
-    if (choice == 1)
+    if (stoi(choice) == 1)
     {
         cout << "Тип: ";
         cin >> this->type;
     }
 
-    else if (choice == 2)
+    else if (stoi(choice) == 2)
     {
         cout << "Цвет: ";
         cin >> this->color;
     }
 
-    else if (choice == 3)
+    else if (stoi(choice) == 3)
     {
         cout << "Назначение: ";
         cin >> appointment;
@@ -707,18 +491,81 @@ void Chancellery::Change()
     else
     {
         cout << "Цена: ";
-        try
-        {
-            cin >> this->cost;
-            if (this->cost < 0) throw "Error";
-        }
-        catch(const std::exception& e)
-        {
-            cout << "Некорректный ввод" << endl;
-        }
-        catch(const char*mssg)
-        {
-            cout << "Неверно введена цена" << endl;
-        }
+        cin >> this->cost;
     }
+}
+
+// методты GetType
+
+int Book::TypeID()
+{
+    return 1;
+}
+int StudyBook::TypeID()
+{
+    return 2;
+}
+int Chancellery::TypeID()
+{
+    return 3;
+}
+
+string Book::Save(int count)
+{
+    if (count == 0) return this->name;
+    else if (count == 1) return this->author;
+    else if (count == 2) return this->year;
+    else if (count == 3) return this->annotation;
+    else if (count == 4) return this->genre;
+    else if (count == 5) return this->volume_of_page;
+    else if (count == 6) return this->cost;
+}
+
+string StudyBook::Save(int count)
+{
+    if (count == 0) return this->name;
+    else if (count == 1) return this->author;
+    else if (count == 2) return this->year;
+    else if (count == 3) return this->educational_institution;
+    else if (count == 4) return this->year_of_study;
+    else if (count == 5) return this->volume_of_page;
+    else if (count == 6) return this->cost;
+}
+
+string Chancellery::Save(int count)
+{
+    if (count == 0) return this->type;
+    else if (count == 1) return this->color;
+    else if (count == 2) return this->appointment;
+    else if (count == 3) return this->cost;
+}
+
+void Book::Load(int count, string line)
+{
+    if (count == 0) this->name = line;
+    else if (count == 1) this->author = line;
+    else if (count == 2) this->year = line;
+    else if (count == 3) this->annotation = line;
+    else if (count == 4) this->genre = line;
+    else if (count == 5) this->volume_of_page = line;
+    else if (count == 6) this->cost = line;
+}
+
+void StudyBook::Load(int count, string line)
+{
+    if (count == 0) this->name = line;
+    else if (count == 1) this->author = line;
+    else if (count == 2) this->year = line;
+    else if (count == 3) this->educational_institution = line;
+    else if (count == 4) this->year_of_study = line;
+    else if (count == 5) this->volume_of_page = line;
+    else if (count == 6) this->cost = line;
+}
+
+void Chancellery::Load(int count, string line)
+{
+    if (count == 0) this->type = line;
+    else if (count == 1) this->color = line;
+    else if (count == 2) this->appointment = line;
+    else if (count == 3) this->cost = line;
 }
